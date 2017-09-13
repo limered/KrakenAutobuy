@@ -1,0 +1,13 @@
+{
+  "name": "kraken-trader",
+  "version": "0.0.0",
+  "description": "KrakenTrader",
+  "main": "app.js",
+  "author": {
+    "name": "emil.wasilewski"
+  },
+  "dependencies": {
+    "kraken-api": "1.0.0",
+    "kraken-client-ts": "0.0.2"
+  }
+}
