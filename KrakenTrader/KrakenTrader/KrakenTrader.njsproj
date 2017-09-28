@@ -46,15 +46,28 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="js\starter.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
     <TypeScriptCompile Include="server.ts" />
+    <Content Include="html\index.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="html\" />
+    <Folder Include="lib\" />
+    <Folder Include="js\" />
     <Folder Include="Scripts\" />
+    <Folder Include="Scripts\app\" />
     <Folder Include="Scripts\typings\" />
     <Folder Include="Scripts\typings\node\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="lib\socket.io.js" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
