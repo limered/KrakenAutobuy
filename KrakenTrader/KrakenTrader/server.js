@@ -12,6 +12,7 @@ var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 server.listen(80);
+var fs = require('fs');
 const KrakenClient = require('kraken-api');
 const kraken = new KrakenClient('', '');
 app.get('/', (req, res) => {
@@ -20,11 +21,22 @@ app.get('/', (req, res) => {
 });
 app.use('/lib', express.static('lib'));
 app.use('/js', express.static('js'));
-io.on('connection', socket => {
+io.on('connection', (socket) => __awaiter(this, void 0, void 0, function* () {
     console.log("Connected succesfully to the socket ...");
-    (() => __awaiter(this, void 0, void 0, function* () {
-        var data = yield kraken.api('Ticker', { pair: 'XXBTZUSD' });
-        socket.emit('test', data);
-    }))();
-});
+    var apiData = yield readApiConfig(__dirname + '/data/apiData.json');
+    socket.emit('test', apiData);
+    //(async () => {
+    //    var data = await kraken.api('Ticker', { pair: 'XXBTZUSD' });
+    //    socket.emit('test', data);
+    //})();
+}));
+var readApiConfig = ((path) => __awaiter(this, void 0, void 0, function* () {
+    return new Promise((resolve, reject) => {
+        fs.readFile(path, (error, data) => {
+            if (error)
+                reject(error.toString());
+            resolve(data.toString());
+        });
+    });
+}));
 //# sourceMappingURL=server.js.map
