@@ -4,11 +4,9 @@ var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 server.listen(80);
-
-var fs = require('fs');
-
+const fs = require('fs');
 const KrakenClient = require('kraken-api');
-const kraken = new KrakenClient('', '');
+var kraken;
 
 app.get('/', (req, res) => {
     console.log("Homepage");
@@ -22,7 +20,10 @@ app.use('/js', express.static('js'));
 io.on('connection', async socket => {
     console.log("Connected succesfully to the socket ...");
 
-    var apiData = await readApiConfig(__dirname + '/data/apiData.json');
+    var apiStr = await readApiConfig(__dirname + '/data/apiData.json');
+    var apiData = JSON.parse(apiStr);
+    
+    kraken = new KrakenClient(apiData['key'], apiData['privatekey']);
 
     socket.emit('test', apiData);
     //(async () => {
@@ -31,8 +32,8 @@ io.on('connection', async socket => {
     //})();
 });
 
-var readApiConfig = (async (path: string): Promise<{}> => {
-    return new Promise((resolve, reject) => {
+var readApiConfig = (async (path: string): Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
         fs.readFile(path,
             (error, data) => {
                 if (error) reject(error.toString());

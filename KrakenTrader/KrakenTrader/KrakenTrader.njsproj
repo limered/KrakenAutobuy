@@ -51,6 +51,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
     <TypeScriptCompile Include="server.ts" />
+    <Content Include="data\apiData-Example.json" />
     <Content Include="data\apiData.json">
       <SubType>Code</SubType>
     </Content>
