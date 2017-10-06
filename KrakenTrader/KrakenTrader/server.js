@@ -23,14 +23,14 @@ app.use('/lib', express.static('lib'));
 app.use('/js', express.static('js'));
 io.on('connection', (socket) => __awaiter(this, void 0, void 0, function* () {
     console.log("Connected succesfully to the socket ...");
-    var apiStr = yield readApiConfig(__dirname + '/data/apiData.json');
-    var apiData = JSON.parse(apiStr);
+    let apiStr = yield readApiConfig(__dirname + '/data/apiData.json');
+    apiStr = apiStr.substr(1, apiStr.length - 1);
+    const apiData = JSON.parse(apiStr);
     kraken = new KrakenClient(apiData['key'], apiData['privatekey']);
-    socket.emit('test', apiData);
-    //(async () => {
-    //    var data = await kraken.api('Ticker', { pair: 'XXBTZUSD' });
-    //    socket.emit('test', data);
-    //})();
+    (() => __awaiter(this, void 0, void 0, function* () {
+        var data = yield kraken.api('Balance');
+        socket.emit('test', data);
+    }))();
 }));
 var readApiConfig = ((path) => __awaiter(this, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
